@@ -1,31 +1,20 @@
-import { Entity, Column, PrimaryColumn, OneToMany } from "typeorm";
-import { TransactionEntity } from "./transaction.entity";
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-@Entity("user")
+@Entity('usuario')
 export class UserEntity {
-    @PrimaryColumn()
-    id: string;
+  @PrimaryColumn()
+  email: string;
 
-    @Column()
-    name: string;
+  @Column()
+  senha: string;
 
-    @Column()
-    cpf: number;
+  @Column({
+    name: 'dthr_criacao',
+  })
+  dthrCriacao: Date;
 
-    @Column()
-    email: string;
-
-    @Column()
-    age: number;
-
-    @Column()
-    password: string;
-
-    @Column({
-        name: "created_at",
-    })
-    createdAt: Date;
-
-    @OneToMany(() => TransactionEntity, (transaction) => transaction.user)
-    transactions: TransactionEntity[];
+  @Column({
+    name: 'updated_at',
+  })
+  updatedAt: Date;
 }

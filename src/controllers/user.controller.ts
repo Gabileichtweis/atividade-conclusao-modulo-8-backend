@@ -5,13 +5,29 @@ import { User } from '../models/user.model';
 import { UserRepository } from '../repositories/user.repository';
 
 export class UserController {
-  public list(req: Request, res: Response) {
+  public async list(req: Request, res: Response) {
     try {
-      return HttpResponse.success(
-        res,
-        'ok',
-        usersList.map((user) => user.toJason())
-      );
+      const repository = new UserRepository();
+      const result = await repository.list();
+
+      return HttpResponse.success(res, 'Users successfully listed', result);
+    } catch (error: any) {
+      return HttpResponse.genericError(res, error);
+    }
+  }
+
+  public async get(req: Request, res: Response) {
+    try {
+      const { email } = req.params;
+
+      const repository = new UserRepository();
+      const result = await repository.get(email);
+
+      if (!result) {
+        return HttpResponse.notFound(res, 'User');
+      }
+
+      return HttpResponse.success(res, 'User successfully obtained', result);
     } catch (error: any) {
       return HttpResponse.genericError(res, error);
     }

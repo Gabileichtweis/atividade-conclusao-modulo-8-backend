@@ -1,3 +1,4 @@
+import { UserEntity } from '../database/entities/user.entity';
 import { Note } from './note.model';
 
 export class User {
@@ -20,5 +21,12 @@ export class User {
       email: this._email,
       password: this._password,
     };
+  }
+
+  public static create(row: UserEntity) {
+    const user = new User(row.email, row.senha);
+    user._email = row.email;
+
+    return user;
   }
 }

@@ -1,36 +1,47 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
-import { TransactionType } from "../../models/transaction.model";
-import { UserEntity } from "./user.entity";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+} from 'typeorm';
+import { UserEntity } from './user.entity';
 
-@Entity("transaction")
+@Entity('recados')
 export class TransactionEntity {
-    @PrimaryColumn()
-    id: string;
+  @PrimaryColumn()
+  id: string;
 
-    @Column()
-    title: string;
+  @Column()
+  titulo: string;
 
-    @Column()
-    value: number;
+  @Column()
+  descricao: string;
 
-    @Column({
-        enum: TransactionType,
-    })
-    type: string;
+  /*  @Column({
+    enum: TransactionType,
+  })
+  type: string; */
 
-    @Column({
-        name: "created_at",
-    })
-    createdAt: Date;
+  @Column({
+    name: 'dthr_criacao',
+  })
+  dthrCriacao: Date;
 
-    @Column({
-        name: "id_user",
-    })
-    idUser: string;
+  @Column({
+    name: 'updated_at',
+  })
+  updatedAt: Date;
 
-    @ManyToOne(() => UserEntity)
-    @JoinColumn({
-        name: "id_user",
-    })
-    user: UserEntity;
+  @Column({
+    name: 'id_usuario',
+  })
+  idUsuario: string;
+
+  @ManyToOne(() => UserEntity)
+  @JoinColumn({
+    name: 'id_user',
+  })
+  user: UserEntity;
 }
