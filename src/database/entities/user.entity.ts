@@ -12,9 +12,4 @@ export class UserEntity {
     name: 'dthr_criacao',
   })
   dthrCriacao: Date;
-
-  @Column({
-    name: 'updated_at',
-  })
-  updatedAt: Date;
 }

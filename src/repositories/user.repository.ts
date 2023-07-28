@@ -13,7 +13,7 @@ export class UserRepository {
 
     return result.map((entity) => UserRepository.mapRowToModel(entity));
   }
- 
+
   public async get(email: string) {
     const result = await this.repository.findOneBy({
       email,

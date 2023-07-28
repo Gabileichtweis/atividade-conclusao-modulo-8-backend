@@ -5,12 +5,12 @@ import { UserRepository } from '../repositories/user.repository';
 import { NotesRepository } from '../repositories/note.respository';
 
 export class NotesController {
-  public listNotes(req: Request, res: Response) {
+  public async listNotes(req: Request, res: Response) {
     try {
       const { email } = req.params;
       const { type } = req.query;
 
-      let notes = new NotesRepository().list({
+      let notes = await new NotesRepository().list({
         email: email,
         type: type as NoteType,
       });
@@ -25,18 +25,18 @@ export class NotesController {
     }
   }
 
-  public createNote(req: Request, res: Response) {
+  public async createNote(req: Request, res: Response) {
     try {
       const { email } = req.params;
       const { title, description, type } = req.body;
 
-      const user = new UserRepository().getEmail(email);
+      const user = await new UserRepository().get(email);
 
       if (!user) {
         return HttpResponse.notFound(res, 'Usuário');
       }
 
-      const newNote = new Note(title, description, type, user);
+      const newNote = await new Note(title, description, type, user);
       new NotesRepository().create(newNote);
 
       return HttpResponse.created(
@@ -49,26 +49,25 @@ export class NotesController {
     }
   }
 
-  public deleteNote(req: Request, res: Response) {
+  public async deleteNote(req: Request, res: Response) {
     try {
       const { email, id } = req.params;
 
-      const user = new UserRepository().getEmail(email);
+      const user = await new UserRepository().get(email);
 
       if (!user) {
         return HttpResponse.notFound(res, 'Usuário');
       }
 
-      const noteIndex = new NotesRepository().findIndex(id);
+      const noteRepository = new NotesRepository();
+      const deletedNotes = await noteRepository.delete(id);
 
-      if (noteIndex < 0) {
+      if (deletedNotes == 0) {
         return HttpResponse.notFound(res, 'Recado');
       }
 
-      new NotesRepository().delete(noteIndex);
-
-      const notes = new NotesRepository().list({
-        email: email,
+      const notes = await noteRepository.list({
+        email,
       });
 
       return HttpResponse.success(

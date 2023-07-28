@@ -1,5 +1,6 @@
 import { v4 as createUuid } from 'uuid';
 import { User } from './user.model';
+import { NoteEntity } from '../database/entities/note.entity';
 
 export enum NoteType {
   archived = 'A',
@@ -57,5 +58,17 @@ export class Note {
       description: this._description,
       type: this._type,
     };
+  }
+
+  public static create(row: NoteEntity, user: User) {
+    const note = new Note(
+      row.titulo,
+      row.descricao,
+      row.type as NoteType,
+      user
+    );
+    note._id = row.id;
+
+    return note;
   }
 }
