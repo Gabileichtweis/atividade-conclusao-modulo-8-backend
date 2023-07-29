@@ -20,6 +20,7 @@ export class User {
     return {
       email: this._email,
       password: this._password,
+      notes: this._notes,
     };
   }
 

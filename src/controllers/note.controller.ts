@@ -85,15 +85,21 @@ export class NotesController {
       const { email, id } = req.params;
       const { title, description, type } = req.body;
 
+      console.log('1');
+
       const user = new UserRepository().get(email);
+      console.log('2');
 
       if (!user) {
         return HttpResponse.notFound(res, 'Usuário');
       }
+      console.log('3');
 
       const noteRepository = new NotesRepository();
+      console.log('4');
 
       const note = await noteRepository.getNote(id);
+      console.log('5');
 
       if (!note) {
         return HttpResponse.notFound(res, 'Recado');

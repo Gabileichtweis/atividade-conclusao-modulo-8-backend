@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { NoteType } from '../../models/note.model';
+import { UserEntity } from './user.entity';
 
 @Entity('recado')
 export class NoteEntity {
@@ -31,4 +32,10 @@ export class NoteEntity {
     name: 'id_usuario',
   })
   user: string;
+
+  @ManyToOne(() => UserEntity)
+  @JoinColumn({
+    name: 'id_usuario',
+  })
+  usuario: UserEntity;
 }

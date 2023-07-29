@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
+import { NoteEntity } from './note.entity';
 
 @Entity('usuario')
 export class UserEntity {
@@ -12,4 +13,7 @@ export class UserEntity {
     name: 'dthr_criacao',
   })
   dthrCriacao: Date;
+
+  @OneToMany(() => NoteEntity, (note) => note.usuario)
+  recados: NoteEntity[];
 }

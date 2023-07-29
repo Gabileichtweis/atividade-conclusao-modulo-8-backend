@@ -1,4 +1,3 @@
-import { usersList } from '../data/users';
 import { Database } from '../database/config/database.connection';
 import { UserEntity } from '../database/entities/user.entity';
 import { User } from '../models/user.model';
@@ -7,7 +6,11 @@ export class UserRepository {
   private repository = Database.connection.getRepository(UserEntity);
 
   public async list() {
-    const result = await this.repository.find();
+    const result = await this.repository.find({
+      relations: {
+        recados: true,
+      },
+    });
 
     return result.map((entity) => UserRepository.mapRowToModel(entity));
   }
@@ -22,10 +25,6 @@ export class UserRepository {
     }
 
     return UserRepository.mapRowToModel(result);
-  }
-
-  public getEmail(email: string) {
-    return usersList.find((user) => user.email === email);
   }
 
   public static mapRowToModel(row: UserEntity): User {

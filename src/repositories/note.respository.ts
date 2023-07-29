@@ -3,6 +3,7 @@ import { Database } from '../database/config/database.connection';
 import { NoteEntity } from '../database/entities/note.entity';
 import { Note, NoteType } from '../models/note.model';
 import { User } from '../models/user.model';
+import { UserRepository } from './user.repository';
 
 interface ListNotesProps {
   email: string;
@@ -13,9 +14,14 @@ export class NotesRepository {
   private repository = Database.connection.getRepository(NoteEntity);
 
   public async list(props: ListNotesProps) {
-    const result = await this.repository.findBy({
-      user: props.email,
-      type: props.type,
+    const result = await this.repository.find({
+      where: {
+        user: props.email,
+        type: props.type,
+      },
+      relations: {
+        usuario: true,
+      },
     });
 
     return result.map((row) => this.mapRowToModel(row));
@@ -41,6 +47,7 @@ export class NotesRepository {
     const result = await this.repository.findOneBy({
       id,
     });
+    console.log(result);
 
     if (!result) {
       return undefined;
@@ -66,10 +73,11 @@ export class NotesRepository {
         descricao: note.description,
       }
     );
+    console.log('repository');
   }
 
-  private mapRowToModel(row: any) {
-    const user = new User('gabriela@teste.com.br', '1234567');
+  private mapRowToModel(row: NoteEntity) {
+    const user = UserRepository.mapRowToModel(row.usuario);
 
     return Note.create(row, user);
   }
