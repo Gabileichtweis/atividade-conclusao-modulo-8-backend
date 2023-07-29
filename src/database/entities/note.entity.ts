@@ -33,7 +33,9 @@ export class NoteEntity {
   })
   user: string;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity, {
+    eager: true,
+  })
   @JoinColumn({
     name: 'id_usuario',
   })
