@@ -9,8 +9,6 @@ export class UserRepository {
   public async list() {
     const result = await this.repository.find();
 
-    console.log(result);
-
     return result.map((entity) => UserRepository.mapRowToModel(entity));
   }
 
@@ -18,7 +16,6 @@ export class UserRepository {
     const result = await this.repository.findOneBy({
       email,
     });
-    console.log(result);
 
     if (!result) {
       return undefined;

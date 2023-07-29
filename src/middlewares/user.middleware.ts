@@ -12,7 +12,7 @@ export class UserMiddleware {
     try {
       const { email } = req.params;
 
-      const user = new UserRepository().getEmail(email);
+      const user = new UserRepository().get(email);
 
       if (!user) {
         return HttpResponse.notFound(res, 'Usuário');
