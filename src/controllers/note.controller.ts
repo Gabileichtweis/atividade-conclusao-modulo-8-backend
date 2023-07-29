@@ -80,18 +80,20 @@ export class NotesController {
     }
   }
 
-  public updateNote(req: Request, res: Response) {
+  public async updateNote(req: Request, res: Response) {
     try {
       const { email, id } = req.params;
       const { title, description, type } = req.body;
 
-      const user = new UserRepository().getEmail(email);
+      const user = new UserRepository().get(email);
 
       if (!user) {
         return HttpResponse.notFound(res, 'Usuário');
       }
 
-      const note = new NotesRepository().getNote(id);
+      const noteRepository = new NotesRepository();
+
+      const note = await noteRepository.getNote(id);
 
       if (!note) {
         return HttpResponse.notFound(res, 'Recado');
@@ -109,12 +111,16 @@ export class NotesController {
         note.type = type as NoteType;
       }
 
-      const notes = new NotesRepository().list({ email });
+      await noteRepository.update(note);
+
+      const notes = await noteRepository.list({
+        email,
+      });
 
       return HttpResponse.created(
         res,
         'Recado atualizado com sucesso',
-        note.toJason()
+        notes.map((note) => note.toJason())
       );
     } catch (error: any) {
       return HttpResponse.genericError(res, error);

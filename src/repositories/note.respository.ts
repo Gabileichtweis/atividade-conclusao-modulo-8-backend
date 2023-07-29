@@ -3,7 +3,6 @@ import { Database } from '../database/config/database.connection';
 import { NoteEntity } from '../database/entities/note.entity';
 import { Note, NoteType } from '../models/note.model';
 import { User } from '../models/user.model';
-import { UserRepository } from './user.repository';
 
 interface ListNotesProps {
   email: string;
@@ -11,7 +10,6 @@ interface ListNotesProps {
 }
 
 export class NotesRepository {
-  private connection = Database.connection;
   private repository = Database.connection.getRepository(NoteEntity);
 
   public async list(props: ListNotesProps) {
@@ -33,21 +31,41 @@ export class NotesRepository {
     });
 
     const result = await this.repository.save(noteEntity);
-    console.log(result);
   }
 
   public findIndex(id: string) {
     return notesList.findIndex((note) => note.id === id);
   }
 
-  public getNote(id: string) {
-    return notesList.find((note) => note.id === id);
+  public async getNote(id: string) {
+    const result = await this.repository.findOneBy({
+      id,
+    });
+
+    if (!result) {
+      return undefined;
+    }
+
+    return this.mapRowToModel(result);
   }
 
   public async delete(index: string) {
     const result = await this.repository.delete(index);
 
     return result.affected ?? 0;
+  }
+
+  public async update(note: Note) {
+    await this.repository.update(
+      {
+        id: note.id,
+      },
+      {
+        type: note.type,
+        titulo: note.title,
+        descricao: note.description,
+      }
+    );
   }
 
   private mapRowToModel(row: any) {

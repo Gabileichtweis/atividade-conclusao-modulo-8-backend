@@ -18,6 +18,7 @@ export class UserRepository {
     const result = await this.repository.findOneBy({
       email,
     });
+    console.log(result);
 
     if (!result) {
       return undefined;

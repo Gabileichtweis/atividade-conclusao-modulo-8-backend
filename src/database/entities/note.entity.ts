@@ -1,8 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { UserEntity } from './user.entity';
 import { NoteType } from '../../models/note.model';
 
-@Entity('recados')
+@Entity('recado')
 export class NoteEntity {
   @PrimaryColumn()
   id: string;
@@ -29,7 +28,7 @@ export class NoteEntity {
   updatedAt: Date;
 
   @Column({
-    name: 'id_usario',
+    name: 'id_usuario',
   })
   user: string;
 }
