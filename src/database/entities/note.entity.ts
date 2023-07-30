@@ -1,4 +1,12 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { NoteType } from '../../models/note.model';
 import { UserEntity } from './user.entity';
 
@@ -18,15 +26,13 @@ export class NoteEntity {
   })
   type: string;
 
-  @Column({
+  @CreateDateColumn({
     name: 'dthr_criacao',
-    default: 'now()',
   })
   dthrCriacao: Date;
 
-  @Column({
+  @UpdateDateColumn({
     name: 'updated_at',
-    default: 'now()',
   })
   updatedAt: Date;
 

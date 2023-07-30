@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, CreateDateColumn } from 'typeorm';
 
 @Entity('usuario')
 export class UserEntity {
@@ -8,9 +8,8 @@ export class UserEntity {
   @Column()
   senha: string;
 
-  @Column({
+  @CreateDateColumn({
     name: 'dthr_criacao',
-    default: 'now()',
   })
   dthrCriacao: Date;
 }
