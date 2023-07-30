@@ -6,11 +6,7 @@ export class UserRepository {
   private repository = Database.connection.getRepository(UserEntity);
 
   public async list() {
-    const result = await this.repository.find({
-      relations: {
-        recados: true,
-      },
-    });
+    const result = await this.repository.find();
 
     return result.map((entity) => UserRepository.mapRowToModel(entity));
   }
@@ -25,6 +21,15 @@ export class UserRepository {
     }
 
     return UserRepository.mapRowToModel(result);
+  }
+
+  public async create(user: User) {
+    const userEntity = this.repository.create({
+      email: user.email,
+      senha: user.password,
+    });
+
+    await this.repository.save(userEntity);
   }
 
   public static mapRowToModel(row: UserEntity): User {

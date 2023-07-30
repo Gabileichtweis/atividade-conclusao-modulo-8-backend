@@ -39,10 +39,6 @@ export class NotesRepository {
     const result = await this.repository.save(noteEntity);
   }
 
-  public findIndex(id: string) {
-    return notesList.findIndex((note) => note.id === id);
-  }
-
   public async getNote(id: string) {
     const result = await this.repository.findOneBy({
       id,

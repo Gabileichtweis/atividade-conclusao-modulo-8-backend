@@ -4,7 +4,7 @@ import { UserEntity } from './user.entity';
 
 @Entity('recado')
 export class NoteEntity {
-  @PrimaryColumn()
+  @PrimaryColumn('uuid')
   id: string;
 
   @Column()
@@ -20,11 +20,13 @@ export class NoteEntity {
 
   @Column({
     name: 'dthr_criacao',
+    default: 'now()',
   })
   dthrCriacao: Date;
 
   @Column({
     name: 'updated_at',
+    default: 'now()',
   })
   updatedAt: Date;
 

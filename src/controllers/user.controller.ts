@@ -3,6 +3,7 @@ import { HttpResponse } from '../util/http-response.adapter';
 import { usersList } from '../data/users';
 import { User } from '../models/user.model';
 import { UserRepository } from '../repositories/user.repository';
+import { UserEntity } from '../database/entities/user.entity';
 
 export class UserController {
   public async list(req: Request, res: Response) {
@@ -33,12 +34,13 @@ export class UserController {
     }
   }
 
-  public create(req: Request, res: Response) {
+  public async create(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
 
-      const user = new User(email, password);
-      usersList.push(user);
+      const user = await new User(email, password);
+
+      new UserRepository().create(user);
 
       HttpResponse.success(
         res,
@@ -50,7 +52,7 @@ export class UserController {
     }
   }
 
-  public login(req: Request, res: Response) {
+  /*   public login(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
 
@@ -62,11 +64,11 @@ export class UserController {
         return HttpResponse.fieldNotProvided(res, 'Senha');
       }
 
-      const user = new UserRepository().getEmail(email);
+      const user = new UserRepository().get(email);
       if (!user) {
         return HttpResponse.invalidCredentials(res);
       }
-      if (user.password !== password) {
+      if (user. !== password) {
         return HttpResponse.invalidCredentials(res);
       }
       return HttpResponse.success(
@@ -77,5 +79,5 @@ export class UserController {
     } catch (error: any) {
       return HttpResponse.genericError(res, error);
     }
-  }
+  } */
 }

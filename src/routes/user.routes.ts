@@ -14,7 +14,7 @@ export const appRoutes = () => {
     new UserController().create
   );
 
-  app.post('/login', new UserController().login);
+  /* app.post('/login', new UserController().login); */
 
   app.use('/:email/notes', noteRoutes());
 

@@ -14,8 +14,9 @@ const config = new DataSource({
     rejectUnauthorized: false,
   },
   synchronize: false,
-  schema: 'recados',
+  schema: 'recados_2',
   entities: ['src/database/entities/**/*.ts'],
+  migrations: ['src/database/migrations/**/*.ts'],
 });
 
 export default config;
