@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { HttpResponse } from '../../../shared/util/http-response.adapter';
 import { UserRepository } from '../repositories/user.repository';
-import { usersList } from '../../../../data/users';
 
 export class UserMiddleware {
   public static validateUserExists(
@@ -36,9 +35,9 @@ export class UserMiddleware {
         return HttpResponse.fieldNotProvided(res, 'E-mail');
       }
 
-      if (usersList.some((user) => user.email === email)) {
+      /* if (usersList.some((user) => user.email === email)) {
         return HttpResponse.invalid(res, 'E-mail');
-      }
+      } */
 
       next();
     } catch (error: any) {
