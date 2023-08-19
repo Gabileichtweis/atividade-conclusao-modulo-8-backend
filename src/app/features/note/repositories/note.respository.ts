@@ -1,4 +1,3 @@
-import { notesList } from '../../../../data/notes';
 import { Database } from '../../../../main/database/database.connection';
 import { NoteEntity } from '../../../shared/database/entities/note.entity';
 import { Note, NoteType } from '../../../models/note.model';
@@ -36,7 +35,7 @@ export class NotesRepository {
       user: note.user.email,
     });
 
-    const result = await this.repository.save(noteEntity);
+    await this.repository.save(noteEntity);
   }
 
   public async getNote(id: string) {
@@ -69,7 +68,6 @@ export class NotesRepository {
         descricao: note.description,
       }
     );
-    console.log('repository');
   }
 
   private mapRowToModel(row: NoteEntity) {
