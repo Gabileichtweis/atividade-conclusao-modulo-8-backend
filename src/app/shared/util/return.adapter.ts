@@ -25,4 +25,12 @@ export class Return {
       code: 404,
     };
   }
+
+  public static alreadyExist(entity: string): Result {
+    return {
+      ok: false,
+      message: `${entity} já cadastrado`,
+      code: 401,
+    };
+  }
 }
