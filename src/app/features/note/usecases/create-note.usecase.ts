@@ -35,7 +35,7 @@ export class CreateNoteUsecase implements Usecase {
     );
 
     await this.notesRepository.create(note);
-    await this.cacheRepository.delete('notes');
+    await this.cacheRepository.delete(`notes-${props.email}`);
 
     return Return.success('Recado criado com sucesso', note.toJason());
   }
