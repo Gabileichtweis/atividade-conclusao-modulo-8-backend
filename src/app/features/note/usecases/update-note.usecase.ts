@@ -56,7 +56,7 @@ export class UpdateNoteUsecase implements Usecase {
     });
 
     return Return.success(
-      'Recado deletado com sucesso',
+      'Recado atualizado com sucesso',
       notes.map((note) => note.toJason())
     );
   }
