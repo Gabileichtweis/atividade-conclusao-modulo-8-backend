@@ -1,10 +1,8 @@
 import { ListNotesUsecase } from '../../../../../src/app/features/note/usecases/list-notes.usecase';
 import { NotesRepository } from '../../../../../src/app/features/note/repositories/note.respository';
-import { User } from '../../../../../src/app/models/user.model';
 import { CacheRepository } from '../../../../../src/app/shared/database/repositories/cache.repository';
 import { Database } from '../../../../../src/main/database/database.connection';
 import { CacheDatabase } from '../../../../../src/main/database/redis.connection';
-import { Note } from '../../../../../src/app/models/note.model';
 
 describe('Testes para o list-users usecase', () => {
   beforeAll(async () => {
