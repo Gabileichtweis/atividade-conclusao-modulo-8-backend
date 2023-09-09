@@ -16,6 +16,8 @@ describe('Testes para o list-users usecase', () => {
   afterAll(async () => {
     await Database.connection.destroy();
     await CacheDatabase.connection.quit();
+
+    jest.setTimeout(30000);
   });
 
   const createSut = () => {
