@@ -14,7 +14,7 @@ export class GetUserUsecase implements Usecase {
     const cacheUsers = await this.cacheRepository.get(`user-${email}`);
 
     if (cacheUsers) {
-      return Return.success('Usuários listados com sucesso', cacheUsers);
+      return Return.success('Usuário obtido com sucesso', cacheUsers);
     }
 
     const user = await this.userRepository.get(email);
@@ -25,6 +25,6 @@ export class GetUserUsecase implements Usecase {
 
     await this.cacheRepository.setEx(`user`, user, 3600);
 
-    return Return.success('Usuário obtido com sucess', user);
+    return Return.success('Usuário obtido com sucesso', user);
   }
 }
