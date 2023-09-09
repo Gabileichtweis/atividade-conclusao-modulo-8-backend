@@ -17,7 +17,7 @@ describe('Testes para o list-users controller', () => {
     return Server.create();
   };
 
-  test('Deveria retornar sucesso se houverem usuários sem cache para listar', async () => {
+  test('Deveria retornar sucesso se houverem usuários para listar', async () => {
     const sut = createSut();
 
     jest
@@ -30,5 +30,17 @@ describe('Testes para o list-users controller', () => {
     expect(result.ok).toBe(true);
     expect(result.status).toBe(200);
     expect(result).toHaveProperty('body');
+  });
+
+  test('deveria retornar 500 se o usecase disparar uma exceção', async () => {
+    const sut = createSut();
+
+    jest
+      .spyOn(ListUsersUsecase.prototype, 'execute')
+      .mockRejectedValue('Error');
+    const result = await request(sut).get('/users').send();
+
+    expect(result).toBeDefined();
+    expect(result.status).toEqual(500);
   });
 });
